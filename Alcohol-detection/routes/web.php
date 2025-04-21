@@ -1,12 +1,14 @@
 <?php
+namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AdminController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/',[HomeController::class, 'homepage']);
 
-route::get('/home', [AdminController::class,'index'])->name('home');
+route::get('/home', [HomeController::class,'index'])->middleware('auth')->name('home');
