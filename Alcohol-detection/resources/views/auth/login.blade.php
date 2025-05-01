@@ -1,48 +1,82 @@
 <x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
-
-        <x-validation-errors class="mb-4" />
-
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
+    <div class="min-h-screen bg-gray-100">
+        <!-- Header -->
+        <header class="bg-white shadow-sm">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+                <div class="text-xl font-semibold text-gray-800">Alcohol Detector Device</div>
+                <nav class="space-x-8 text-sm">
+                    <a href="{{ url('/') }}" class="font-semibold text-black border-b-2 border-black">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-black">Products</a>
+                    <a href="#" class="text-gray-600 hover:text-black">Contacts</a>
+                </nav>
             </div>
-        @endsession
+        </header>
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+        <!-- Main Content -->
+        <div class="flex items-center justify-center py-12">
+            <div class="flex w-full max-w-4xl shadow-lg rounded-lg overflow-hidden bg-white">
 
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                <!-- Left Image Panel -->
+                <div class="w-1/2 bg-cover bg-center" style="background-image: url('/images/register-bg.jpeg')"></div>
+
+                <!-- Login Form -->
+                <div class="w-1/2 p-8">
+                    <h2 class="text-xl text-center text-blue-600 font-semibold mb-6">Welcome Back</h2>
+
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <!-- Email -->
+                        <div class="mb-4">
+                            <label for="email" class="block font-semibold text-sm text-gray-700">Email</label>
+                            <input id="email" name="email" type="email" required autofocus
+                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label for="password" class="block font-semibold text-sm text-gray-400">Password</label>
+                            <input id="password" name="password" type="password" required
+                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <!-- Remember Me -->
+                        <div class="flex items-center justify-between mb-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="remember" class="mr-2">
+                                <span class="text-sm text-gray-600">Remember me</span>
+                            </label>
+                            <a href="{{ route('password.request') }}" class="text-sm text-blue-600 hover:underline">Forgot Password?</a>
+                        </div>
+
+                        <!-- Submit -->
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button type="submit"
+                                style="background-color: blue; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
+                                Log In
+                            </button>
+                        </div>
+
+                        <!-- Social Login (Optional) -->
+                        <div class="text-center text-sm text-gray-600 mt-4">or log in with</div>
+                        <div class="flex justify-center gap-4 mt-2">
+                            <button type="button" class="bg-gray-100 rounded-full p-2 shadow">
+                                <img src="https://img.icons8.com/color/48/000000/google-logo.png" class="h-6 w-6" />
+                            </button>
+                            <button type="button" class="bg-gray-100 rounded-full p-2 shadow">
+                                <img src="https://img.icons8.com/fluency/48/000000/facebook-new.png" class="h-6 w-6" />
+                            </button>
+                        </div>
+
+                        <!-- Sign Up -->
+                        <p class="text-center text-sm text-gray-600 mt-4">
+                            Don’t have an account?
+                            <a href="{{ route('register') }}" class="text-blue-600 font-semibold">Sign Up</a>
+                        </p>
+                    </form>
+                </div>
             </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
-
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
-        </form>
-    </x-authentication-card>
+        </div>
+    </div>
 </x-guest-layout>
+

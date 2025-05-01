@@ -10,11 +10,12 @@
     <nav>
         <div class="logo">Alcohol Detector<br>Device</div>
         <ul>
-            <li class="active">Home</li>
-            <li>Products</li>
-            <li>Contacts</li>
+            <li class="active"><a href="{{ url('/') }}">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contacts.html">Contacts</a></li>
         </ul>
     </nav>
+
 
     <div class="container">
         <div class="icon">➕</div> <!-- Replace with an actual image if needed -->
@@ -26,8 +27,9 @@
         </p>
 
         <div class="buttons">
-            <button class="btn btn-login">Login</button>
-            <button class="btn btn-signup">Sign Up</button>
+            <button class="btn btn-login" onclick="window.location.href='/login'">Login</button>
+
+            <button class="btn btn-signup"onclick="window.location.href='/register'">Sign Up</button>
         </div>
     </div>
 
