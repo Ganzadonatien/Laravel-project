@@ -13,7 +13,7 @@ Route::get('/', [HomeController::class, 'homepage']);
 
 // Routes for user registration
 Route::get('/register', [HomeController::class, 'register'])->name('register');
-Route::post('/register', [RegisterController::class, 'store'])->name('register');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 // Route for authenticated home
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');

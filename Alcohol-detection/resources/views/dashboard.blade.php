@@ -102,6 +102,7 @@
             }
         }
     </style>
+    @include('home.homecss');
 
     <div class="dashboard-container">
         <div class="navbar">
@@ -109,13 +110,13 @@
                 Alcohol Detector <br> Device
             </div>
             <div>
-                <a href="#" style="margin-right: 20px;">Home</a>
-                <a href="#" style="margin-right: 20px;">Products</a>
-                <a href="#">Contacts</a>
+                <ul>
+                    <li class="active"><a href="{{ url('/') }}">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="contacts.html">Contacts</a></li>
+                </ul>
             </div>
-            <div>
-                ⚙️
-            </div>
+
         </div>
 
         <div class="user-greeting">
