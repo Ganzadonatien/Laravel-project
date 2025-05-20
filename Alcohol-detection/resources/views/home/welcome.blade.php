@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alcohol Detector Device</title>
+   @include('/home.homecss');
+   <link rel="stylesheet" href="{{ asset('css/home/homecss.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Alcohol Detector<br>Device</div>
+        <ul>
+            <li class="active"><a href="homepage.blade.php">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contacts.html">Contacts</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="container">
+        <div class="icon">➕</div> <!-- Replace with an actual image if needed -->
+        <div class="welcome">Welcome<br>User</div>
+        <div class="small-text">ALcohol Detector</div>
+        <p class="description">
+            Hello User, Welcome to this website that helps you to receive the data related to the
+            measurement of breath analyzer.
+        </p>
+
+        <div class="buttons">
+            <button class="btn btn-login" onclick="window.location.href='{{route('login')}}'">Login</button>
+
+            <button class="btn btn-signup"onclick="window.location.href='{{route('register')}}'">Sign Up</button>
+        </div>
+    </div>
+
+</body>
+</html>

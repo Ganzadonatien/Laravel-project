@@ -8,7 +8,8 @@ use App\Http\Controllers\HomeController;
 Route::get('/register', function () {
     return view('home.register');
 })->name('register');
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'welcome']);
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

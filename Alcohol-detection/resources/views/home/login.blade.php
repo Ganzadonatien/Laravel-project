@@ -6,7 +6,7 @@
             <div class="w-full md:w-1/2 p-8">
                 <h2 class="text-2xl font-semibold text-center text-blue-600 mb-6">Welcome Back!</h2>
 
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('home') }}">
                     @csrf
 
                     <!-- Email -->

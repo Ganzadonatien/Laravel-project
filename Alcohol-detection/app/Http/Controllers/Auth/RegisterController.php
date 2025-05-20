@@ -11,34 +11,22 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function create()
-    {
-        return view('auth.register');
-    }
+    //public function create()
+    //{
+    //    return view('auth.register');
+    //}
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone' => ['required', 'string', 'max:20'],
-            'dob' => ['required', 'date'],
-            'role' => ['required', 'in:User,Admin'],
+        $data = $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'password'=>'required',
+            'phone'=>'required',
+            'role'=>'required',
         ]);
+        $user = User::create($data);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'phone' => $request->phone,
-            'dob' => $request->dob,
-            'role' => $request->role,
-        ]);
-
-        Auth::guard('web')->login($user);
-
-
-        return redirect()->route('login')->with('success', 'Registration successful!');
+        return redirect(route('login'));
     }
 }

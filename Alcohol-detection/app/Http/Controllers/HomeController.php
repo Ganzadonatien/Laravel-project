@@ -7,10 +7,13 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    public function welcome(){
+        return view('home.welcome');
+    }
     public function index()
     {
         if (Auth::check()) {
-            $usertype = Auth::user()->usertype;
+            $usertype = Auth::user()->role;
 
             if ($usertype == 'user') {
                 return view('dashboard');
@@ -21,7 +24,7 @@ class HomeController extends Controller
             }
         }
 
-        return redirect('/login'); // Redirect users who are not logged in
+        //return redirect('/login'); // Redirect users who are not logged in
     }
 
     public function homepage()
