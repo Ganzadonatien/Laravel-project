@@ -1,162 +1,50 @@
-@extends('layouts.app')
+<!-- resources/views/user/dashboard.blade.php -->
+@extends('layouts.sidebar')
 
 @section('content')
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-        }
+<div class="p-6">
+    <h2 class="text-2xl font-bold mb-4">Hello, {{ Auth::user()->name }}</h2>
 
-        .dashboard-container {
-            padding: 2rem;
-        }
+    <!-- Alcohol Chart Section -->
+    <div class="bg-white shadow rounded-lg p-4 mb-6">
+        <canvas id="alcoholChart"></canvas>
+    </div>
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-title {
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .user-greeting {
-            margin-top: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .bold-name {
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .section {
-            margin-top: 2rem;
-        }
-
-        .chart-section {
-            text-align: center;
-        }
-
-        .chart-image {
-            max-width: 100%;
-            margin: 0 auto;
-            display: block;
-        }
-
-        .cards-section {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-            gap: 2rem;
-        }
-
-        .card-group {
-            flex: 1;
-            min-width: 280px;
-        }
-
-        .card-title {
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .images-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .images-grid img {
-            width: 100%;
-            border-radius: 12px;
-        }
-
-        .mission-cards {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .mission {
-            background-color: #6c63ff;
-            padding: 1rem;
-            border-radius: 15px;
-            color: white;
-            flex: 1;
-            text-align: center;
-        }
-
-        .mission h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .cards-section {
-                flex-direction: column;
-            }
-
-            .mission-cards {
-                flex-direction: column;
-            }
-        }
-    </style>
-    @include('home.homecss');
-
-    <div class="dashboard-container">
-        <div class="navbar">
-            <div class="logo-title">
-                Alcohol Detector <br> Device
+    <!-- Main Content -->
+    <div class="grid grid-cols-2 gap-6">
+        <!-- Alcohol Limiting Tips -->
+        <div>
+            <h3 class="text-lg font-semibold mb-2">Limit To Drink more alcohol</h3>
+            <div class="grid grid-cols-2 gap-2">
+                <img src="/images/drink1.jpg" alt="drink" class="rounded-lg w-28 h-28 object-cover">
+                <img src="/images/drink2.jpg" alt="drink" class="rounded-lg w-28 h-28 object-cover">
+                <img src="/images/drink3.jpg" alt="drink" class="rounded-lg w-28 h-28 object-cover">
+                <img src="/images/drink4.jpg" alt="drink" class="rounded-lg w-28 h-28 object-cover">
             </div>
-            <div>
-                <ul>
-                    <li class="active"><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="products.html">Products</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
-                </ul>
-            </div>
-
         </div>
 
-        <div class="user-greeting">
-            Hello,<br>
-            <span class="bold-name">Olivier John</span>
-        </div>
-
-        <div class="section chart-section">
-            <h3>Alcohol level & test time</h3>
-            <img src="{{ asset('images/chart-example.png') }}" alt="Alcohol Level Chart" class="chart-image">
-        </div>
-
-        <div class="section cards-section">
-            <div class="card-group">
-                <div class="card-title">Limit To Drink more alcohol</div>
-                <div class="images-grid">
-                    <img src="{{ asset('images/limit1.jpg') }}" alt="Limit 1">
-                    <img src="{{ asset('images/limit2.jpg') }}" alt="Limit 2">
-                    <img src="{{ asset('images/limit3.jpg') }}" alt="Limit 3">
-                    <img src="{{ asset('images/limit4.jpg') }}" alt="Limit 4">
+        <!-- Missions Section -->
+        <div>
+            <h3 class="text-lg font-semibold mb-2">Recommended Missions</h3>
+            <div class="flex gap-4">
+                <div class="bg-purple-200 rounded-2xl p-4 shadow-md w-1/3">
+                    <h4 class="font-bold">Prevention</h4>
+                    <p class="text-sm">Promote responsibility by discouraging drunkenness.</p>
                 </div>
-            </div>
-
-            <div class="card-group">
-                <div class="card-title">Recommended Missions</div>
-                <div class="mission-cards">
-                    <div class="mission">
-                        <h3>Prevention</h3>
-                        <p>Promote early warning by encouraging awareness before driving or work.</p>
-                    </div>
-                    <div class="mission">
-                        <h3>Safety</h3>
-                        <p>Ensure safety by detecting alcohol before risks.</p>
-                    </div>
-                    <div class="mission">
-                        <h3>Compliance</h3>
-                        <p>Ensure legal compliance in driving and workplaces.</p>
-                    </div>
+                <div class="bg-blue-200 rounded-2xl p-4 shadow-md w-1/3">
+                    <h4 class="font-bold">Safety</h4>
+                    <p class="text-sm">Ensure safety by reducing alcohol before rides.</p>
+                </div>
+                <div class="bg-indigo-200 rounded-2xl p-4 shadow-md w-1/3">
+                    <h4 class="font-bold">Compliance</h4>
+                    <p class="text-sm">Ensure legal compliance in driving and workplaces.</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div id="chart-root"></div>
 @endsection

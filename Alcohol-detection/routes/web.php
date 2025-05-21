@@ -18,3 +18,14 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.store');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [HomeController::class, 'index1'])->name('dashboard');
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile/edit', [HomeController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [HomeController::class, 'update'])->name('profile.update');
+    Route::delete('/profile/delete', [HomeController::class, 'destroy'])->name('profile.delete');
+});
