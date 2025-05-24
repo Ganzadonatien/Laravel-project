@@ -4,27 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use App\Models\AlcoholRecord;
+
 class HomeController extends Controller
 {
-    public function welcome(){
-        return view('home.welcome');
-    }
-    public function index()
+    public function welcome()
     {
-        if (Auth::check()) {
-            $usertype = Auth::user()->role;
-
-            if ($usertype == 'user') {
-                return view('dashboard');
-            } elseif ($usertype == 'admin') {
-                return view('admin.index');
-            } else {
-                return redirect()->back();
-            }
-        }
-
-        //return redirect('/login'); // Redirect users who are not logged in
+        return view('home.welcome');
     }
 
     public function homepage()
@@ -37,30 +24,64 @@ class HomeController extends Controller
         return view('home.register');
     }
 
+    public function index()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
 
+        $user = Auth::user();
 
+        if ($user->role === 'User') {
+            $records = AlcoholRecord::where('user_id', $user->id)->orderBy('tested_at')->get();
 
+            $dates = $records->pluck('tested_at')->map(fn($date) => $date->format('d M Y'));
+            $levels = $records->pluck('alcohol_level');
 
-    public function index1()
-{
-    $user = Auth::user();
+            $highLevelAlert = optional($records->last())->alcohol_level > 0.8;
 
-    $records = AlcoholRecord::where('user_id', $user->id)->orderBy('tested_at')->get();
+            $alerts = [
+                '🕒 Reminder: Maintain a safe level to avoid health and legal issues.',
+                '🚘 Safety Tip: Never drive under the influence!',
+                '💡 Did You Know? Regular high alcohol levels can affect your liver.'
+            ];
 
-    $dates = $records->pluck('tested_at')->map(function ($date) {
-        return $date->format('d M Y');
-    });
+            return view('dashboard', compact('dates', 'levels', 'highLevelAlert', 'alerts'));
+        }
 
-    $levels = $records->pluck('alcohol_level');
+        if ($user->role === 'Admin') {
+            return view('admin.index');
+        }
 
-    return view('dashboard', compact('dates', 'levels'));
-}
+        return redirect('/login')->withErrors('Unauthorized role access.');
+    }
 
-public function destroy(Request $request)
-{
-    $user = $request->user();
-    $user->delete();
+    public function downloadReport($period)
+    {
+        $user = Auth::user();
+        $start = now()->subDays($period === 'weekly' ? 7 : 30);
 
-    return redirect('/')->with('status', 'Your account has been deleted.');
-}
+        $records = AlcoholRecord::where('user_id', $user->id)
+            ->where('tested_at', '>=', $start)
+            ->orderBy('tested_at')
+            ->get(['tested_at', 'alcohol_level']);
+
+        $csv = "Date,Alcohol Level\n";
+        foreach ($records as $r) {
+            $csv .= $r->tested_at->format('Y-m-d') . ',' . $r->alcohol_level . "\n";
+        }
+
+        return Response::make($csv, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=alcohol_report_{$period}.csv",
+        ]);
+    }
+
+    public function destroy(Request $request)
+    {
+        $user = $request->user();
+        $user->delete();
+
+        return redirect('/')->with('status', 'Your account has been deleted.');
+    }
 }
