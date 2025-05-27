@@ -25,8 +25,11 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'email', 'password', 'phone', 'dob', 'role'];
+ use HasApiTokens, HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name', 'email', 'password', 'role', 'device_id'
+    ];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -59,5 +62,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+     public function device()
+    {
+        return $this->hasOne(Device::class, 'user_id');
     }
 }

@@ -71,7 +71,6 @@
                             <select id="role" name="role" required
                                     class="mt-1 w-11/12 border border-blue-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
                                 <option value="User">User</option>
-                                <option value="Admin">Admin</option>
                             </select>
                         </div>
 
