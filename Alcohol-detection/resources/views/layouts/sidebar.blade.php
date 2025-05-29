@@ -22,9 +22,7 @@
             <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-blue-600">
                 <i class="fas fa-heart text-blue-500"></i> Favorite
             </a>
-            <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-blue-600">
-                <i class="fas fa-credit-card text-blue-500"></i> Payment Method
-            </a>
+            
             <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-blue-600">
                 <i class="fas fa-lock text-blue-500"></i> Privacy Policy
             </a>
