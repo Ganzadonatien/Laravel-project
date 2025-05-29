@@ -14,7 +14,7 @@
             <h2 class="text-2xl font-bold text-blue-600 mb-4">Admin Panel</h2>
         </div>
         <nav class="space-y-4">
-            <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-blue-600">
+            <a href="{{route('dashboard')}}" class="flex items-center gap-3 text-gray-700 hover:text-blue-600">
                 <i class="fas fa-home"></i> Dashboard
             </a>
             <a href="{{route('admin.users.index')}}" class="flex items-center gap-3 text-gray-700 hover:text-blue-600">
@@ -23,9 +23,7 @@
             <a href="{{ route('admin.devices.index') }}" class="flex items-center gap-3 text-gray-700 hover:text-blue-600">
                 <i class="fas fa-microchip"></i> Manage Devices
             </a>
-            <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-blue-600">
-                <i class="fas fa-chart-line"></i> Reports
-            </a>
+           
             <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-blue-600">
                 <i class="fas fa-cog"></i> Settings
             </a>

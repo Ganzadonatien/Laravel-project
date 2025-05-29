@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone')->nullable();
+            $table->string('assigned_device')->nullable();
             $table->date('dob')->nullable();
-            $table->string('role')->default('User');
+            $table->string('role')->default('user');
             $table->timestamps();
         });
     }

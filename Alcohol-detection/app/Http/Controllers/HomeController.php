@@ -32,7 +32,7 @@ class HomeController extends Controller
 
         $user = Auth::user();
 
-        if ($user->role === 'User') {
+        if ($user->role === 'user') {
             $records = AlcoholRecord::where('user_id', $user->id)->orderBy('tested_at')->get();
 
             $dates = $records->pluck('tested_at')->map(fn($date) => $date->format('d M Y'));
@@ -46,15 +46,30 @@ class HomeController extends Controller
                 '💡 Did You Know? Regular high alcohol levels can affect your liver.'
             ];
 
+
             return view('dashboard', compact('dates', 'levels', 'highLevelAlert', 'alerts'));
         }
 
-        if ($user->role === 'Admin') {
+        if ($user->role === 'admin') {
             return view('admin.index');
         }
 
         return redirect('/login')->withErrors('Unauthorized role access.');
     }
+
+public function index1()
+{
+    // Check if user is authenticated
+    $user = Auth::id() ? \App\Models\User::with('assignedDevice')->find(Auth::id()) : null;
+
+    if (!$user) {
+        return redirect('/login');
+    }
+
+    return view('dashboard', compact('user'));
+
+
+}
 
     public function downloadReport($period)
     {
@@ -84,4 +99,36 @@ class HomeController extends Controller
 
         return redirect('/')->with('status', 'Your account has been deleted.');
     }
+
+    public function edit()
+{
+    $user = Auth::user();
+    return view('profile.edit', compact('user'));
+}
+
+public function update(Request $request)
+{
+    $user = \App\Models\User::find(Auth::id());
+
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+        'profile_image' => 'nullable|image|max:2048',
+    ]);
+
+    if ($request->hasFile('profile_image')) {
+        $image = $request->file('profile_image');
+        $imagePath = $image->store('profiles', 'public');
+        $user->profile_image_url = asset('storage/' . $imagePath);
+    }
+
+    $user->name = $validatedData['name'];
+    $user->email = $validatedData['email'];
+    $user->save();
+
+    return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
+}
+
+
+
 }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,14 +12,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('devices', function (Blueprint $table) {
-    $table->id();
-    $table->string('name');
-    $table->string('serial_number')->unique();
-    $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-    $table->timestamps();
-});
+        // Update existing devices without status to 'available'
+        DB::table('devices')
+            ->whereNull('status')
+            ->orWhere('status', '')
+            ->update(['status' => 'available']);
 
+        // Update devices that are assigned to users
+        DB::table('devices')
+            ->whereIn('id', function($query) {
+                $query->select('device_id')
+                      ->from('users')
+                      ->whereNotNull('device_id');
+            })
+            ->update(['status' => 'assigned']);
     }
 
     /**
@@ -26,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('devices');
+        // No need to reverse this data migration
     }
 };

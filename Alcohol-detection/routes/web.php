@@ -19,13 +19,8 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.store');
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-
-
-
 Route::get('/dashboard', [HomeController::class, 'index'])->middleware('auth');
 Route::get('/download-report/{period}', [HomeController::class, 'downloadReport'])->name('report.download');
-
-
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [HomeController::class, 'edit'])->name('profile.edit');
@@ -34,12 +29,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
 Route::get('/admin', [AdminController::class, 'index'])->name('dashboard');
-
-
-
-
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/devices', [DeviceController::class, 'index'])->name('admin.devices.index');
@@ -50,12 +40,12 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::delete('/devices/{device}', [DeviceController::class, 'destroy'])->name('admin.devices.destroy');
 });
 
-
-
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-    // ... devices routes
 
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('admin.users.show');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
