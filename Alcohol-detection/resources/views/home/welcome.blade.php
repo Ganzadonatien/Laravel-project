@@ -13,7 +13,7 @@
         <div class="logo">Alcohol Detector<br>Device</div>
         <ul>
             <li class="active"><a href="homepage.blade.php">Home</a></li>
-            <li><a href="products.html">Products</a></li>
+
             <li><a href="contacts.html">Contacts</a></li>
         </ul>
     </nav>
@@ -22,7 +22,7 @@
     <div class="container">
         <div class="icon">➕</div> <!-- Replace with an actual image if needed -->
         <div class="welcome">Welcome<br>User</div>
-        <div class="small-text">ALcohol Detector</div>
+        <div class="small-text">Alcohol Detector</div>
         <p class="description">
             Hello User, Welcome to this website that helps you to receive the data related to the
             measurement of breath analyzer.

@@ -102,7 +102,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        return $this->role === 'Admin';
+        return $this->role === 'admin';
     }
 
 
@@ -114,7 +114,7 @@ class User extends Authenticatable
      */
     public function isUser()
     {
-        return $this->role === 'User';
+        return $this->role === 'user';
     }
 
 
@@ -128,7 +128,7 @@ class User extends Authenticatable
     public function getRolePermissions()
     {
         switch ($this->role) {
-            case 'Admin':
+            case 'admin':
                 return [
                     'can_create_users' => true,
                     'can_delete_users' => true,
@@ -138,7 +138,7 @@ class User extends Authenticatable
                     'can_access_logs' => true,
                 ];
 
-            case 'User':
+            case 'user':
                 return [
                     'can_create_users' => false,
                     'can_delete_users' => false,

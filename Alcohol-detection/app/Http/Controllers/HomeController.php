@@ -51,7 +51,7 @@ class HomeController extends Controller
         }
 
         if ($user->role === 'admin') {
-            return view('admin.index');
+             return app(AdminController::class)->index();
         }
 
         return redirect('/login')->withErrors('Unauthorized role access.');
@@ -128,6 +128,8 @@ public function update(Request $request)
 
     return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
 }
+
+
 
 
 

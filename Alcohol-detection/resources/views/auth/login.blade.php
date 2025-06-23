@@ -6,7 +6,7 @@
                 <div class="text-xl font-semibold text-gray-800">Alcohol Detector Device</div>
                 <nav class="space-x-8 text-sm">
                     <a href="{{ url('/') }}" class="font-semibold text-black border-b-2 border-black">Home</a>
-                    <a href="#" class="text-gray-600 hover:text-black">Products</a>
+                    
                     <a href="#" class="text-gray-600 hover:text-black">Contacts</a>
                 </nav>
             </div>

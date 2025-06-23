@@ -6,7 +6,7 @@
                 <div class="text-xl font-semibold text-gray-800">Alcohol Detector Device</div>
                 <nav class="space-x-8 text-sm">
                     <a href="{{ url('/') }}" class="font-semibold text-black border-b-2 border-black">Home</a>
-                    <a href="#" class="text-gray-600 hover:text-black">Products</a>
+
                     <a href="#" class="text-gray-600 hover:text-black">Contacts</a>
                 </nav>
             </div>
@@ -70,7 +70,7 @@
                             <label for="role" class="block font-medium text-sm text-gray-700">Role:</label>
                             <select id="role" name="role" required
                                     class="mt-1 w-11/12 border border-blue-400 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                                <option value="User">User</option>
+                                <option value="User">user</option>
                             </select>
                         </div>
 

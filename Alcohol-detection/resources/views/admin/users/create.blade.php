@@ -50,9 +50,8 @@
                     @php
                         $roles = [
                             'admin' => 'Administrator - Full system access and user management',
-                            'moderator' => 'Moderator - Content management and user moderation',
+
                             'user' => 'User - Standard user access',
-                            'viewer' => 'Viewer - Read-only access'
                         ];
                     @endphp
 

@@ -25,6 +25,7 @@ class RegisterController extends Controller
             'phone'=>'required',
             'role'=>'required',
         ]);
+         $data['role'] = strtolower($data['role']);
         $user = User::create($data);
 
         return redirect(route('login'));
