@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: alcohol-detection-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      - ./storage:/var/www/html/storage
+    networks:
+      - alcohol-network
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    container_name: alcohol-detection-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./.nginx:/etc/nginx/conf.d/default.conf
+    networks:
+      - alcohol-network
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: alcohol-detection-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: alcohol_detection
+      MYSQL_USER: alcohol_user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - alcohol-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: alcohol-detection-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: alcohol_user
+      PMA_PASSWORD: secret
+    ports:
+      - "8081:80"
+    networks:
+      - alcohol-network
+    depends_on:
+      - db
+
+networks:
+  alcohol-network:
+    driver: bridge
+
+volumes:
+  db_data:
